@@ -49,6 +49,8 @@ class ICMPv6Generic < RacketPart
   ICMPv6_TYPE_REDIRECT = 137
   ICMPv6_TYPE_INFORMATION_REQUEST = 139
   ICMPv6_TYPE_INFORMATION_REPLY = 140
+  ICMPv6_TYPE_CAPABILITY_SOLICITATION = 200
+  ICMPv6_TYPE_CAPABILITY_ADVERTISEMENT = 201
 
   # Type
   unsigned :type, 8
@@ -441,6 +443,44 @@ class ICMPv6NodeInformationReply < ICMPv6NodeInformation
     self.type = ICMPv6_TYPE_INFORMATION_REPLY
   end
 end
+
+# Generic ICMPv6 , used by ICMPv6CapabilityAdvertisement and ICMPv6CapabilitySolicitation 
+class ICMPv6Capability < ICMPv6Generic
+  # identifier to aid in matching echo requests/replies
+  unsigned :id, 16
+  # sequence number to aid in matching requests/replies
+  unsigned :sequence, 16
+  rest :payload
+
+  def initialize(*args)
+    super(*args)
+  end
+
+end
+
+# ICMPv6CapabilityAdvertisement
+class ICMPv6CapabilityAdvertisement < ICMPv6Capability
+  rest :payload
+
+  def initialize(*args)
+    super(*args)
+    self.type = ICMPv6_TYPE_CAPABILITY_ADVERTISEMENT
+    self.code = 0
+  end
+
+end
+
+# ICMPv6CapabilitySolicitation
+class ICMPv6CapabilitySolicitation < ICMPv6Capability
+  rest :payload
+
+  def initialize(*args)
+    super(*args)
+    self.type = ICMPv6_TYPE_CAPABILITY_SOLICITATION
+    self.code = 0
+  end
+end
+
 end
 end
 # vim: set ts=2 et sw=2:
