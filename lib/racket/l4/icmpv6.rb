@@ -450,6 +450,7 @@ class ICMPv6Capability < ICMPv6Generic
   unsigned :id, 16
   # sequence number to aid in matching requests/replies
   unsigned :sequence, 16
+  unsigned :total, 16
   rest :payload
 
   def initialize(*args)
