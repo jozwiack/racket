@@ -91,6 +91,7 @@ class ICMPv6Generic < RacketPart
       options << o[0..2]
       p = o[3]
     end
+    self.payload = p
     options
   end
 
@@ -447,10 +448,10 @@ end
 # Generic ICMPv6 , used by ICMPv6CapabilityAdvertisement and ICMPv6CapabilitySolicitation 
 class ICMPv6Capability < ICMPv6Generic
   # identifier to aid in matching echo requests/replies
-  #unsigned :id, 16
+  unsigned :id, 32
   # sequence number to aid in matching requests/replies
-  unsigned :sequence, 32
-  unsigned :total, 32
+  unsigned :sequence, 16
+  unsigned :total, 16
   rest :payload
 
   def initialize(*args)

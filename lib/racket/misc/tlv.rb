@@ -49,7 +49,8 @@ class TLV
   def decode(data)
     s = "#{punpack_string(@ts)}#{punpack_string(@ls)}"
     type, length, tmp = data.unpack("#{s}a*")
-    if (type.nil? or length.nil?)
+    # 0 = [48] type is invalid
+    if (type.nil? or length.nil? or type == 48)
       nil
     else
       elength = (length * lbytes) - (@tlinclude ? (@ls + @ts) : 0) 
