@@ -91,7 +91,9 @@ class ICMPv6Generic < RacketPart
       options << o[0..2]
       p = o[3]
     end
-    self.payload = p
+    # We are removing the starting zero. In SCD starting zero indicates the payload
+    self.payload = p.gsub(/^0/,'')
+
     options
   end
 
