@@ -452,8 +452,8 @@ class ICMPv6Capability < ICMPv6Generic
   # identifier to aid in matching echo requests/replies
   unsigned :id, 32
   # sequence number to aid in matching requests/replies
-  unsigned :sequence, 16
-  unsigned :total, 16
+  #unsigned :sequence, 16
+  #unsigned :total, 16
   rest :payload
 
   def initialize(*args)
