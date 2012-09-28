@@ -76,9 +76,9 @@ class ICMPv6Generic < RacketPart
   def add_option(type, value)
     t = Misc::TLV.new(1,1)
     t.type = type
-    t.length = (value.length + 2) / 8
-    just = value.length + 2 + (8 - ((value.length + 2) % 8))
-    t.value = (value.length + 2) % 8 == 0 ? value : value.ljust(just, "\x00")
+    t.length = ((value.length + 2) / 8.0).ceil
+    #just = value.length + 2 + (8 - ((value.length + 2) % 8))
+    t.value = value.ljust(t.length * 8 -2, "\x00")
     self.payload = t.encode + self.payload 
   end
 
@@ -450,10 +450,10 @@ end
 # Generic ICMPv6 , used by ICMPv6CapabilityAdvertisement and ICMPv6CapabilitySolicitation 
 class ICMPv6Capability < ICMPv6Generic
   # identifier to aid in matching echo requests/replies
-  unsigned :id, 32
+  #unsigned :id, 32
   # sequence number to aid in matching requests/replies
-  unsigned :sequence, 16
-  unsigned :total, 16
+  unsigned :sequence, 32
+  unsigned :total, 32
   rest :payload
 
   def initialize(*args)

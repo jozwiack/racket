@@ -58,7 +58,7 @@ class TLV
       if (value.empty? and length > 0)
         nil
       else
-        [type, length, value, rest]
+        [type, length, value.rstrip, rest]
       end
     end
   end
